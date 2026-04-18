@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGINA | Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 260px;
+            background: var(--bg-card);
+            border-right: 1px solid var(--glass-border);
+            padding: 2rem 1.5rem;
+            z-index: 1000;
+        }
+        .sidebar-brand {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .nav-pill {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+        }
+        .nav-pill:hover, .nav-pill.active {
+            background: var(--glass);
+            color: var(--primary);
+        }
+        .admin-main {
+            margin-left: 260px;
+            padding: 4rem;
+        }
+        .admin-section {
+            display: none;
+        }
+        .admin-section.active {
+            display: block;
+        }
+        .product-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .btn-add {
+            float: right;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 992px) {
+            .sidebar { width: 80px; padding: 2rem 0.5rem; }
+            .sidebar-brand { font-size: 1rem; }
+            .nav-pill span { display: none; }
+            .admin-main { margin-left: 80px; padding: 2rem; }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Simple Login -->
+    <div id="login-overlay">
+        <div class="modal-content" style="text-align: center;">
+            <h2 style="margin-bottom: 2rem;">Ingia Admin</h2>
+            <input type="password" id="admin-pass" placeholder="Nenosiri" style="width: 100%; padding: 1rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; color: white; margin-bottom: 1rem;">
+            <button onclick="checkPass()" class="btn-primary" style="width: 100%;">Ingia</button>
+            <p id="error-msg" style="color: var(--primary); margin-top: 1rem; display: none;">Nenosiri si sahihi!</p>
+            <a href="index.html" style="display: block; margin-top: 2rem; color: var(--text-muted); text-decoration: none;">← Rudi Dukani</a>
+        </div>
+    </div>
+
+    <aside class="sidebar" id="sidebar" style="display:none;">
+        <div class="sidebar-brand">REGINA</div>
+        <div class="nav-pill active" onclick="showSection(event, 'orders')">
+            <span>📦</span> <span>Maagizo</span>
+        </div>
+        <div class="nav-pill" onclick="showSection(event, 'products')">
+            <span>🍔</span> <span>Bidhaa</span>
+        </div>
+        <div class="nav-pill" onclick="showSection(event, 'customers')">
+            <span>👥</span> <span>Wateja</span>
+        </div>
+        <a href="index.html#about" class="nav-pill">
+            <span>ℹ️</span> <span>Kuhusu Sisi</span>
+        </a>
+        <div style="position:absolute; bottom:2rem; width:calc(100% - 3rem);">
+            <a href="index.html" class="nav-pill"><span>🏠</span> <span>Rudi Dukani</span></a>
+            <div class="nav-pill" onclick="logout()"><span>🚪</span> <span>Log Out</span></div>
+        </div>
+    </aside>
+
+    <main class="admin-main" id="main-content" style="display:none;">
+        <!-- Orders Section -->
+        <section id="orders-section" class="admin-section active">
+            <div class="section-title" style="text-align: left;">
+                <p>Usimamizi wa Maagizo</p>
+                <h2>Maagizo ya Leo</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Mauzo (TZS)</h3>
+                    <span class="stat-value" id="total-sales">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Maagizo</h3>
+                    <span class="stat-value" id="order-count">0</span>
+                </div>
+                <div class="stat-card">
+                    <h3>Inasubiri</h3>
+                    <span class="stat-value" id="pending-count" style="color:var(--accent)">0</span>
+                </div>
+            </div>
+
+            <div class="order-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Mteja</th>
+                            <th>Chakula</th>
+                            <th>Jumla</th>
+                            <th>Hali</th>
+                            <th>Kitendo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="order-rows"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products-section" class="admin-section">
+            <div class="section-title" style="text-align: left;">
+                <p>Usimamizi wa Bidhaa</p>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h2>Menu ya Chakula</h2>
+                    <button class="btn-primary" onclick="openProductModal()">+ Ongeza Bidhaa</button>
+                </div>
+            </div>
+
+            <div class="order-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Picha</th>
+                            <th>Jina</th>
+                            <th>Aina</th>
+                            <th>Bei</th>
+                            <th>Kitendo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-rows"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Customers Section -->
+        <section id="customers-section" class="admin-section">
+            <div class="section-title" style="text-align: left;">
+                <p>Takwimu za Wateja</p>
+                <h2>Wateja Wetu Bora</h2>
+            </div>
+
+            <div class="order-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Jina</th>
+                            <th>Maagizo</th>
+                            <th>Jumla ya Matumizi</th>
+                            <th>Anwani ya Mwisho</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customer-rows"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Product Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <button onclick="closeProductModal()" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">×</button>
+            <h2 id="modal-title">Bidhaa Mpya</h2>
+            <form id="product-form" onsubmit="saveProduct(event)" class="payment-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label>Jina la Chakula</label>
+                    <input type="text" id="p-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Aina (Category)</label>
+                    <input type="text" id="p-cat" required placeholder="Mf. Vitafunio">
+                </div>
+                <div class="form-group">
+                    <label>Bei (TZS)</label>
+                    <input type="number" id="p-price" required>
+                </div>
+                <div class="form-group">
+                    <label>Image URL / Filename</label>
+                    <input type="text" id="p-img" required placeholder="burger_card_new_1773003645941.png">
+                </div>
+                <button type="submit" class="btn-primary">Hifadhi Bidhaa</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        function checkPass() {
+            const pass = document.getElementById('admin-pass').value.trim();
+            if(pass === 'MAYUNGA7') {
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('sidebar').style.display = 'block';
+                document.getElementById('main-content').style.display = 'block';
+                loadAll();
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        document.getElementById('admin-pass').addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') checkPass();
+        });
+
+        function showSection(e, section) {
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+            
+            document.getElementById(`${section}-section`).classList.add('active');
+            if (e) e.currentTarget.classList.add('active');
+            
+            if(section === 'orders') loadOrders();
+            if(section === 'products') loadProducts();
+            if(section === 'customers') loadCustomers();
+        }
+
+        function loadAll() {
+            loadOrders();
+            loadProducts();
+            loadCustomers();
+        }
+
+        // --- Orders Management ---
+        function loadOrders() {
+            const orders = JSON.parse(localStorage.getItem('regina_orders') || '[]');
+            const tbody = document.getElementById('order-rows');
+            let totalRevenue = 0;
+            let pendingCount = 0;
+            
+            tbody.innerHTML = '';
+            orders.reverse().forEach(order => {
+                totalRevenue += order.total;
+                if(order.status === 'Inasubiri') pendingCount++;
+                
+                const itemsList = order.items.map(i => `
+                    <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:4px;">
+                        <img src="${i.image}" style="width:30px; height:30px; border-radius:4px; object-fit:cover;">
+                        <span>${i.name} (${i.quantity})</span>
+                    </div>
+                `).join('');
+                tbody.innerHTML += `
+                    <tr>
+                        <td>#${order.id.toString().slice(-4)}</td>
+                        <td>
+                            <strong>${order.customer}</strong><br>
+                            <small style="color:var(--text-muted)">${order.address}</small>
+                            ${order.location ? `<br><a href="https://www.google.com/maps?q=${order.location.lat},${order.location.lng}" target="_blank" style="color:var(--primary); font-size:0.8rem; text-decoration:none;">📍 Ramani</a>` : ''}
+                        </td>
+                        <td>${itemsList}</td>
+                        <td>${order.total.toLocaleString()} TZS</td>
+                        <td><span class="status-badge status-${order.status.toLowerCase()}">${order.status}</span></td>
+                        <td>
+                            <button onclick="updateStatus(${order.id})" class="action-btn">Tayari</button>
+                            <button onclick="deleteOrder(${order.id})" class="action-btn" style="color:var(--primary)">×</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('total-sales').innerText = totalRevenue.toLocaleString();
+            document.getElementById('order-count').innerText = orders.length;
+            document.getElementById('pending-count').innerText = pendingCount;
+        }
+
+        function updateStatus(id) {
+            let orders = JSON.parse(localStorage.getItem('regina_orders') || '[]');
+            orders = orders.map(o => o.id === id ? {...o, status: 'Tayari'} : o);
+            localStorage.setItem('regina_orders', JSON.stringify(orders));
+            loadOrders();
+        }
+
+        function deleteOrder(id) {
+            if(confirm('Futa agizo hili?')) {
+                let orders = JSON.parse(localStorage.getItem('regina_orders') || '[]');
+                orders = orders.filter(o => o.id !== id);
+                localStorage.setItem('regina_orders', JSON.stringify(orders));
+                loadOrders();
+            }
+        }
+
+        // --- Products Management ---
+        function loadProducts() {
+            const menu = JSON.parse(localStorage.getItem('regina_menu') || '[]');
+            const tbody = document.getElementById('product-rows');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            
+            menu.forEach(item => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${item.image}" class="product-img"></td>
+                        <td><strong>${item.name}</strong></td>
+                        <td>${item.category}</td>
+                        <td>${item.price.toLocaleString()} TZS</td>
+                        <td>
+                            <button onclick="openProductModal(${item.id})" class="action-btn">Hariri</button>
+                            <button onclick="deleteProduct(${item.id})" class="action-btn" style="color:var(--primary)">Ondoa</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function openProductModal(id = null) {
+            const modal = document.getElementById('product-modal');
+            const form = document.getElementById('product-form');
+            modal.classList.add('active');
+            
+            if(id) {
+                const menu = JSON.parse(localStorage.getItem('regina_menu') || '[]');
+                const item = menu.find(m => m.id === id);
+                document.getElementById('modal-title').innerText = "Hariri Bidhaa";
+                document.getElementById('edit-id').value = id;
+                document.getElementById('p-name').value = item.name;
+                document.getElementById('p-cat').value = item.category;
+                document.getElementById('p-price').value = item.price;
+                document.getElementById('p-img').value = item.image;
+            } else {
+                document.getElementById('modal-title').innerText = "Bidhaa Mpya";
+                form.reset();
+                document.getElementById('edit-id').value = "";
+            }
+        }
+
+        function closeProductModal() {
+            document.getElementById('product-modal').classList.remove('active');
+        }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-id').value;
+            const name = document.getElementById('p-name').value;
+            const cat = document.getElementById('p-cat').value;
+            const price = parseInt(document.getElementById('p-price').value);
+            const img = document.getElementById('p-img').value;
+
+            let menu = JSON.parse(localStorage.getItem('regina_menu') || '[]');
+
+            if(id) {
+                menu = menu.map(m => m.id == id ? {id: parseInt(id), name, category: cat, price, image: img} : m);
+            } else {
+                menu.push({id: Date.now(), name, category: cat, price, image: img});
+            }
+
+            localStorage.setItem('regina_menu', JSON.stringify(menu));
+            closeProductModal();
+            loadProducts();
+            alert("Mabadiliko yamehifadhiwa!");
+        }
+
+        function deleteProduct(id) {
+            if(confirm('Ondoa bidhaa hii kwenye menu?')) {
+                let menu = JSON.parse(localStorage.getItem('regina_menu') || '[]');
+                menu = menu.filter(m => m.id != id);
+                localStorage.setItem('regina_menu', JSON.stringify(menu));
+                loadProducts();
+            }
+        }
+
+        // --- Customers Logic ---
+        function loadCustomers() {
+            const orders = JSON.parse(localStorage.getItem('regina_orders') || '[]');
+            const customers = {};
+            
+            orders.forEach(o => {
+                if(!customers[o.customer]) {
+                    customers[o.customer] = {
+                        name: o.customer,
+                        orders: 0,
+                        spent: 0,
+                        lastAddress: o.address
+                    };
+                }
+                customers[o.customer].orders += 1;
+                customers[o.customer].spent += o.total;
+                customers[o.customer].lastAddress = o.address;
+            });
+
+            const tbody = document.getElementById('customer-rows');
+            tbody.innerHTML = '';
+            
+            Object.values(customers).sort((a,b) => b.spent - a.spent).forEach(c => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${c.name}</strong></td>
+                        <td>${c.orders}</td>
+                        <td>${c.spent.toLocaleString()} TZS</td>
+                        <td>${c.lastAddress}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        function logout() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

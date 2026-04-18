@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGINA FAST FOOD | Premium Eatery</title>
+    <meta name="description" content="Order the best fast food in town from REGINA. Delicious burgers, fries, and fried chicken delivered to your doorstep.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <nav>
+        <div class="logo">REGINA</div>
+        <div class="nav-links" id="nav-links">
+            <a href="#home" onclick="toggleMobileMenu()">Mwanzo</a>
+            <a href="#menu" onclick="toggleMobileMenu()">Menu</a>
+            <a href="#about" onclick="toggleMobileMenu()">Kuhusu Sisi</a>
+            <a href="admin.html" style="color:var(--primary)">Admin</a>
+        </div>
+        <div style="display:flex; gap:1.5rem; align-items:center;">
+            <div class="cart-icon" id="cart-trigger">
+                🛒 <span class="cart-count" id="cart-count">0</span>
+            </div>
+            <div class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</div>
+        </div>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <p>INAVUTIA, MOTO & TAMU SANA</p>
+            <h1>REGINA FAST FOOD</h1>
+            <p>Pata chakula bora na kitamu zaidi mjini kutoka REGINA. Kimepikwa kwa upendo, kimeandaliwa kwa tabasamu.</p>
+            <!-- Buttons removed as per request -->
+        </div>
+    </header>
+
+    <section class="section" id="menu">
+        <div class="section-title">
+            <p>Vinavyopendwa na Wateja</p>
+            <h2>Vyakula Vyenyewe</h2>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="menu-search" placeholder="Tafuta chakula..." onkeyup="searchMenu()">
+            </div>
+        </div>
+
+        <div class="filters" id="category-filters">
+            <button class="filter-btn active" onclick="filterMenu('Zote', event)">Zote</button>
+            <button class="filter-btn" onclick="filterMenu('Vitafunio', event)">Vitafunio</button>
+            <button class="filter-btn" onclick="filterMenu('Chakula Kikuu', event)">Chakula Kikuu</button>
+            <button class="filter-btn" onclick="filterMenu('Supu', event)">Supu</button>
+            <button class="filter-btn" onclick="filterMenu('Fast Food', event)">Fast Food</button>
+            <button class="filter-btn" onclick="filterMenu('Vinywaji', event)">Vinywaji</button>
+        </div>
+
+        <div class="menu-grid" id="menu-grid">
+            <!-- Food Cards will be injected by JS -->
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Agizo Lako</h3>
+            <button id="close-cart" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">×</button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <!-- Vyakula vitaonekana hapa -->
+        </div>
+        <div class="cart-total">
+            <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+                <span>Jumla</span>
+                <span id="total-price">0 TZS</span>
+            </div>
+            <button class="btn-primary" id="checkout-btn" style="width:100%">Lipa Sasa</button>
+        </div>
+    </aside>
+
+    <section class="section" id="about" style="background:var(--bg-card);">
+        <div class="section-title">
+            <p>Sisi ni Nani?</p>
+            <h2>Kuhusu REGINA</h2>
+        </div>
+        <div style="max-width:800px; margin:0 auto; text-align:center;">
+            <p style="font-size:1.2rem; color:var(--text-muted); margin-bottom:2rem;">
+                REGINA FAST FOOD ni sehemu yako ya kipekee kwa vyakula vitamu na bichi. 
+                Tumejitolea kukupa ladha halisi ya nyumbani kwa haraka na ubora wa hali ya juu.
+            </p>
+            <div style="background:var(--glass); padding:2rem; border-radius:24px; border:1px solid var(--primary);">
+                <h3 style="color:var(--primary); margin-bottom:1rem;">📍 Mahali Petu</h3>
+                <p style="font-size:1.3rem; font-weight:600;">Tunapatikana karibu na Msikiti wa Kione, Tiptop.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div style="text-align:center; padding:4rem; border-top: 1px solid var(--glass-border); color: var(--text-muted);">
+            <p>&copy; 2026 REGINA FAST FOOD. Haki zote zimehifadhiwa.</p>
+        </div>
+    </footer>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="payment-modal">
+        <div class="modal-content">
+            <button id="close-payment" style="position:absolute; top:20px; right:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">×</button>
+            <h2 style="margin-bottom:0.5rem;">Malipo Salama</h2>
+            <p style="color:var(--text-muted);">Kamilisha agizo lako la <span id="payment-total" style="color:var(--primary); font-weight:bold;">0 TZS</span></p>
+            
+            <form class="payment-form" id="checkout-form">
+                <!-- Processing Overlay -->
+                <div id="payment-processing" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:var(--bg-card); border-radius:32px; flex-direction:column; align-items:center; justify-content:center; z-index:10; text-align:center;">
+                    <div class="spinner" style="width:50px; height:50px; border:5px solid var(--glass); border-top-color:var(--primary); border-radius:50%; animation: spin 1s linear infinite; margin-bottom:1rem;"></div>
+                    <h3>Tunashughulikia Malipo...</h3>
+                    <p style="color:var(--text-muted)">Tunalinda maelezo yako</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>Jina Kamili</label>
+                    <input type="text" placeholder="Jina lako" required>
+                </div>
+                <div class="form-group">
+                    <label>Mahali unapoishi (Delivery)</label>
+                    <div style="display:flex; gap:0.5rem;">
+                        <input type="text" id="delivery-address" placeholder="Mf. Morocco St, Dar Es Salaam" required style="flex:1">
+                        <button type="button" id="get-location-btn" class="location-btn" title="Pin Location">📍</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Namba ya Kadi</label>
+                    <input type="text" placeholder="0000 0000 0000 0000" required>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:1rem;">
+                    <div class="form-group">
+                        <label>Tarehe ya Mwisho</label>
+                        <input type="text" placeholder="MM/YY" required>
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" placeholder="***" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top:1rem;">Lipa na Agiza</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
