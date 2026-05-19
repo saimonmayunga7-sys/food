@@ -5,20 +5,20 @@
     --accent: #FFB800;
 
     /* Neutral Palette */
-    --bg-dark: #0A0A0A;
-    --bg-card: #121212;
+    --bg-dark: #0b0908;          /* Rich warm dark chocolate charcoal */
+    --bg-card: #15110e;          /* Soft warm card background */
     --text-main: #FFFFFF;
-    --text-muted: #B0B0B0;
-    --glass: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-heavy: rgba(15, 15, 15, 0.8);
+    --text-muted: #B8B0AC;       /* Warm-tinted muted text */
+    --glass: rgba(255, 255, 255, 0.02);
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --glass-heavy: rgba(21, 17, 14, 0.85);
 
     /* Typography */
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
 
     /* Effects */
-    --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.4);
+    --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.5);
     --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -33,7 +33,7 @@ html {
 }
 
 body {
-    background-color: var(--bg-dark);
+    background: radial-gradient(circle at 50% 0%, #1e1612 0%, #0b0908 70%) no-repeat fixed;
     color: var(--text-main);
     font-family: var(--font-body);
     line-height: 1.6;
