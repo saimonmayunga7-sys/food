@@ -1,9 +1,14 @@
 :root {
-    /* Primary Palette - Warm & Appetizing (Eye-friendly terracotta/amber theme) */
-    --primary: #ff5e36;
-    --primary-glow: rgba(255, 94, 54, 0.15);
-    --primary-hover: #e04a22;
+    /* Primary Palette - Carrot Theme */
+    --primary: #ff781f;          /* Vibrant Carrot Orange */
+    --primary-glow: rgba(255, 120, 31, 0.15);
+    --primary-hover: #e05f0d;
     --accent: #FFB800;
+
+    /* Green Buttons Palette (Fresh Emerald Green) */
+    --btn-green: #10b981;
+    --btn-green-hover: #059669;
+    --btn-green-glow: rgba(16, 185, 129, 0.25);
 
     /* Neutral Palette */
     --bg-dark: #12100e;          /* Rich warm dark chocolate charcoal */
@@ -165,10 +170,10 @@ nav {
     letter-spacing: 4px;
     margin-bottom: 2rem;
     text-shadow: 0 0 20px var(--primary-glow);
-    background: rgba(255, 94, 54, 0.08);
+    background: rgba(255, 120, 31, 0.08);
     padding: 0.6rem 1.8rem;
     border-radius: 100px;
-    border: 1px solid rgba(255, 94, 54, 0.25);
+    border: 1px solid rgba(255, 120, 31, 0.25);
     backdrop-filter: blur(8px);
     text-transform: uppercase;
     font-size: 0.9rem;
@@ -193,7 +198,7 @@ nav {
 }
 
 .btn-primary {
-    background: var(--primary);
+    background: var(--btn-green);
     color: white;
     padding: 1rem 2.5rem;
     border: none;
@@ -204,13 +209,13 @@ nav {
     transition: var(--transition);
     text-decoration: none;
     display: inline-block;
-    box-shadow: 0 4px 14px var(--primary-glow);
+    box-shadow: 0 4px 14px var(--btn-green-glow);
 }
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(255, 94, 54, 0.4);
-    background: var(--primary-hover);
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+    background: var(--btn-green-hover);
 }
 
 /* --- Menu Section --- */
@@ -305,10 +310,10 @@ nav {
 
 .filter-btn:hover,
 .filter-btn.active {
-    background: var(--primary);
-    border-color: var(--primary);
+    background: var(--btn-green);
+    border-color: var(--btn-green);
     color: white;
-    box-shadow: 0 8px 16px var(--primary-glow);
+    box-shadow: 0 8px 16px var(--btn-green-glow);
 }
 
 .menu-grid {
@@ -330,7 +335,7 @@ nav {
 .food-card:hover {
     transform: translateY(-12px) scale(1.01);
     border-color: var(--primary);
-    box-shadow: 0 20px 40px rgba(255, 94, 54, 0.1);
+    box-shadow: 0 20px 40px rgba(255, 120, 31, 0.1);
 }
 
 .food-img-wrapper {
@@ -406,39 +411,15 @@ nav {
 }
 
 .add-btn:hover {
-    background: var(--primary);
-    border-color: var(--primary);
-    box-shadow: 0 10px 20px var(--primary-glow);
+    background: var(--btn-green);
+    border-color: var(--btn-green);
+    box-shadow: 0 10px 20px var(--btn-green-glow);
     transform: translateY(-2px);
 }
 
-/* --- About section adjustments --- */
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
+/* --- About section background adjustments --- */
 .about-img-container {
-    border-radius: 32px;
-    overflow: hidden;
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-premium);
-    height: 450px;
-}
-
-.about-img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition);
-}
-
-.about-img-container:hover img {
-    transform: scale(1.03);
+    display: none; /* Hidden because image is now background */
 }
 
 /* --- Custom Scrollbar --- */
@@ -460,13 +441,14 @@ nav {
     background: var(--primary);
 }
 
-/* --- Cart Sidebar --- */
+/* --- Cart Sidebar (Using dvh for dynamic height) --- */
 .cart-sidebar {
     position: fixed;
     right: -100%;
     top: 0;
     width: 400px;
     height: 100vh;
+    height: 100dvh;
     background: var(--glass-heavy);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -571,11 +553,11 @@ nav {
 
 .location-btn {
     background: var(--glass);
-    border: 1px solid var(--primary);
+    border: 1px solid var(--btn-green);
     border-radius: 12px;
     padding: 0 1.2rem;
     cursor: pointer;
-    color: var(--primary);
+    color: var(--btn-green);
     font-size: 1.2rem;
     transition: var(--transition);
     display: flex;
@@ -584,7 +566,7 @@ nav {
 }
 
 .location-btn:hover {
-    background: var(--primary);
+    background: var(--btn-green);
     color: white;
 }
 
@@ -710,8 +692,8 @@ tr:hover td {
 }
 
 .action-btn:hover {
-    background: var(--primary);
-    border-color: var(--primary);
+    background: var(--btn-green);
+    border-color: var(--btn-green);
     color: white;
 }
 
@@ -874,18 +856,9 @@ tr:hover td {
         gap: 1.5rem;
     }
 
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .about-img-container {
-        height: 300px;
-    }
-
     .cart-sidebar {
         width: 100%;
-        padding: 1.5rem;
+        padding: 1.5rem 1.5rem 3.5rem 1.5rem; /* extra padding bottom to make sure Lipa Sasa button is not clipped by safari/chrome UI */
     }
 
     .modal-content {
