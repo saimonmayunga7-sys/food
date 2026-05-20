@@ -1,30 +1,30 @@
 :root {
     /* Primary Palette - Carrot Theme */
     --primary: #ff781f;          /* Vibrant Carrot Orange */
-    --primary-glow: rgba(255, 120, 31, 0.15);
+    --primary-glow: rgba(255, 120, 31, 0.1);
     --primary-hover: #e05f0d;
-    --accent: #FFB800;
+    --accent: #e67e22;
 
     /* Green Buttons Palette (Fresh Emerald Green) */
     --btn-green: #10b981;
     --btn-green-hover: #059669;
-    --btn-green-glow: rgba(16, 185, 129, 0.25);
+    --btn-green-glow: rgba(16, 185, 129, 0.2);
 
-    /* Neutral Palette */
-    --bg-dark: #12100e;          /* Rich warm dark chocolate charcoal */
-    --bg-card: #1c1815;          /* Soft warm card background */
-    --text-main: #f5f0eb;        /* Soft warm white to prevent glare and eye strain */
-    --text-muted: #a69c96;       /* Warm-tinted muted text */
-    --glass: rgba(255, 255, 255, 0.02);
-    --glass-border: rgba(255, 255, 255, 0.05);
-    --glass-heavy: rgba(28, 24, 21, 0.9);
+    /* Neutral Palette - Light & Bright Theme */
+    --bg-dark: #faf7f2;          /* Soft light cream background */
+    --bg-card: #ffffff;          /* Pure white card background */
+    --text-main: #2c2520;        /* Warm espresso brown (very gentle on the eyes, avoids harsh black) */
+    --text-muted: #7d7269;       /* Warm-tinted muted text */
+    --glass: rgba(0, 0, 0, 0.02);
+    --glass-border: rgba(0, 0, 0, 0.06);
+    --glass-heavy: rgba(255, 255, 255, 0.85);
 
     /* Typography */
     --font-heading: 'Outfit', sans-serif;
     --font-body: 'Inter', sans-serif;
 
     /* Effects */
-    --shadow-premium: 0 20px 40px rgba(0, 0, 0, 0.5);
+    --shadow-premium: 0 15px 30px rgba(44, 37, 32, 0.05);
     --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -39,7 +39,7 @@ html {
 }
 
 body {
-    background: radial-gradient(circle at 50% 0%, #201a16 0%, #12100e 80%) no-repeat fixed;
+    background: radial-gradient(circle at 50% 0%, #ffffff 0%, #faf7f2 100%) no-repeat fixed;
     color: var(--text-main);
     font-family: var(--font-body);
     line-height: 1.6;
@@ -67,7 +67,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(18, 16, 14, 0.85);
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     z-index: 1000;
@@ -139,7 +139,7 @@ nav {
     text-align: center;
     padding-left: 5%;
     padding-right: 5%;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.85)), url('assets/images/hero_banner.png');
+    background: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.65)), url('assets/images/hero_banner.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -169,7 +169,7 @@ nav {
     font-weight: 800;
     letter-spacing: 4px;
     margin-bottom: 2rem;
-    text-shadow: 0 0 20px var(--primary-glow);
+    text-shadow: 0 2px 10px rgba(255, 120, 31, 0.2);
     background: rgba(255, 120, 31, 0.08);
     padding: 0.6rem 1.8rem;
     border-radius: 100px;
@@ -183,18 +183,19 @@ nav {
     font-size: clamp(2.5rem, 8vw, 6rem);
     margin-bottom: 1.5rem;
     line-height: 1.05;
-    background: linear-gradient(to bottom, #ffffff, #dcd8d3);
+    background: linear-gradient(to bottom, #ffffff, #eaeaea);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
 }
 
 .hero-content p:nth-child(3) {
     font-size: 1.3rem;
     max-width: 700px;
     margin: 0 auto 2.5rem;
-    color: var(--text-muted);
+    color: #ffffff;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .btn-primary {
@@ -214,7 +215,7 @@ nav {
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.4);
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
     background: var(--btn-green-hover);
 }
 
@@ -227,6 +228,7 @@ nav {
 .section-title h2 {
     font-size: clamp(2rem, 5vw, 3rem);
     margin-bottom: 0.5rem;
+    color: var(--text-main);
 }
 
 .section-title p {
@@ -249,19 +251,19 @@ nav {
     position: relative;
     width: 100%;
     max-width: 500px;
-    background: var(--glass);
+    background: #ffffff;
     border: 1px solid var(--glass-border);
     border-radius: 50px;
     padding: 0.8rem 1.5rem;
     display: flex;
     align-items: center;
     transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
 }
 
 .search-box:focus-within {
     border-color: var(--primary);
-    box-shadow: 0 0 20px var(--primary-glow);
-    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 15px rgba(255, 120, 31, 0.15);
 }
 
 .search-icon {
@@ -274,7 +276,7 @@ nav {
     flex: 1;
     background: none;
     border: none;
-    color: white;
+    color: var(--text-main);
     font-size: 1rem;
     font-family: inherit;
 }
@@ -297,7 +299,7 @@ nav {
 }
 
 .filter-btn {
-    background: var(--glass);
+    background: #ffffff;
     border: 1px solid var(--glass-border);
     color: var(--text-muted);
     padding: 0.8rem 1.5rem;
@@ -306,6 +308,7 @@ nav {
     font-weight: 600;
     transition: var(--transition);
     white-space: nowrap;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.01);
 }
 
 .filter-btn:hover,
@@ -329,13 +332,13 @@ nav {
     transition: var(--transition);
     border: 1px solid var(--glass-border);
     position: relative;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-premium);
 }
 
 .food-card:hover {
     transform: translateY(-12px) scale(1.01);
     border-color: var(--primary);
-    box-shadow: 0 20px 40px rgba(255, 120, 31, 0.1);
+    box-shadow: 0 20px 40px rgba(255, 120, 31, 0.08);
 }
 
 .food-img-wrapper {
@@ -353,7 +356,7 @@ nav {
     width: 100%;
     height: 50%;
     background: linear-gradient(to top, var(--bg-card), transparent);
-    opacity: 0.9;
+    opacity: 0.95;
 }
 
 .food-img-wrapper img {
@@ -387,6 +390,7 @@ nav {
     font-size: 1.6rem;
     margin: 0.5rem 0;
     font-weight: 700;
+    color: var(--text-main);
 }
 
 .food-price {
@@ -399,9 +403,9 @@ nav {
 .add-btn {
     width: 100%;
     padding: 1.2rem;
-    background: var(--glass);
+    background: var(--bg-dark);
     border: 1px solid var(--glass-border);
-    color: white;
+    color: var(--text-main);
     border-radius: 16px;
     cursor: pointer;
     font-weight: 700;
@@ -413,13 +417,14 @@ nav {
 .add-btn:hover {
     background: var(--btn-green);
     border-color: var(--btn-green);
+    color: white;
     box-shadow: 0 10px 20px var(--btn-green-glow);
     transform: translateY(-2px);
 }
 
 /* --- About section background adjustments --- */
 .about-img-container {
-    display: none; /* Hidden because image is now background */
+    display: none;
 }
 
 /* --- Custom Scrollbar --- */
@@ -433,7 +438,7 @@ nav {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--glass-border);
+    background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
 }
 
@@ -441,7 +446,7 @@ nav {
     background: var(--primary);
 }
 
-/* --- Cart Sidebar (Using dvh for dynamic height) --- */
+/* --- Cart Sidebar --- */
 .cart-sidebar {
     position: fixed;
     right: -100%;
@@ -455,7 +460,7 @@ nav {
     z-index: 2000;
     padding: 2rem;
     transition: 0.5s cubic-bezier(0.7, 0, 0.3, 1);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     border-left: 1px solid var(--glass-border);
@@ -474,6 +479,14 @@ nav {
     padding-bottom: 1rem;
 }
 
+.cart-header h3 {
+    color: var(--text-main);
+}
+
+#close-cart {
+    color: var(--text-main) !important;
+}
+
 .cart-items {
     flex-grow: 1;
     overflow-y: auto;
@@ -482,6 +495,7 @@ nav {
 .cart-total {
     padding-top: 2rem;
     border-top: 1px solid var(--glass-border);
+    color: var(--text-main);
 }
 
 /* --- Modal System --- */
@@ -491,9 +505,9 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(44, 37, 32, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: none;
     align-items: center;
     justify-content: center;
@@ -513,7 +527,16 @@ nav {
     border: 1px solid var(--glass-border);
     position: relative;
     animation: zoomIn 0.3s ease-out;
-    box-shadow: var(--shadow-premium);
+    box-shadow: 0 20px 50px rgba(44, 37, 32, 0.15);
+}
+
+.modal-content h2,
+.modal-content p {
+    color: var(--text-main);
+}
+
+#close-payment {
+    color: var(--text-main) !important;
 }
 
 .payment-form {
@@ -535,11 +558,11 @@ nav {
 }
 
 .form-group input {
-    background: var(--glass);
+    background: var(--bg-dark);
     border: 1px solid var(--glass-border);
     padding: 0.9rem 1.2rem;
     border-radius: 12px;
-    color: white;
+    color: var(--text-main);
     font-family: inherit;
     transition: var(--transition);
 }
@@ -547,12 +570,12 @@ nav {
 .form-group input:focus {
     outline: none;
     border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 0 10px var(--primary-glow);
+    background: #ffffff;
+    box-shadow: 0 0 10px rgba(255, 120, 31, 0.1);
 }
 
 .location-btn {
-    background: var(--glass);
+    background: var(--bg-dark);
     border: 1px solid var(--btn-green);
     border-radius: 12px;
     padding: 0 1.2rem;
@@ -583,7 +606,7 @@ nav {
     border: 1px solid var(--glass-border);
     padding: 1.8rem;
     border-radius: 24px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-premium);
     transition: var(--transition);
 }
 
@@ -616,6 +639,7 @@ nav {
     border-radius: 20px;
     border: 1px solid var(--glass-border);
     background: var(--bg-card);
+    box-shadow: var(--shadow-premium);
 }
 
 table {
@@ -626,7 +650,7 @@ table {
 }
 
 th {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.015);
     color: var(--text-main);
     font-weight: 600;
     padding: 1.2rem 1.5rem;
@@ -639,7 +663,7 @@ th {
 
 td {
     padding: 1.2rem 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     color: var(--text-muted);
     vertical-align: middle;
 }
@@ -650,7 +674,7 @@ tr:last-child td {
 
 tr:hover td {
     color: var(--text-main);
-    background: rgba(255, 255, 255, 0.01);
+    background: rgba(0, 0, 0, 0.005);
 }
 
 /* --- Badges and Buttons (Admin) --- */
@@ -679,7 +703,7 @@ tr:hover td {
 }
 
 .action-btn {
-    background: var(--glass);
+    background: var(--bg-dark);
     border: 1px solid var(--glass-border);
     color: var(--text-main);
     padding: 0.5rem 1rem;
@@ -746,6 +770,7 @@ tr:hover td {
     .sidebar {
         width: 80px;
         padding: 2rem 0.5rem;
+        background: #ffffff;
     }
     
     .sidebar-brand {
@@ -765,6 +790,7 @@ tr:hover td {
 @media (max-width: 768px) {
     nav {
         padding: 1rem 5%;
+        background: rgba(255, 255, 255, 0.9);
     }
 
     .logo {
@@ -858,7 +884,7 @@ tr:hover td {
 
     .cart-sidebar {
         width: 100%;
-        padding: 1.5rem 1.5rem 3.5rem 1.5rem; /* extra padding bottom to make sure Lipa Sasa button is not clipped by safari/chrome UI */
+        padding: 1.5rem 1.5rem 3.5rem 1.5rem;
     }
 
     .modal-content {
