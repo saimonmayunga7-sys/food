@@ -17,6 +17,8 @@
             border-right: 1px solid var(--glass-border);
             padding: 2rem 1.5rem;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
         }
         .sidebar-brand {
             font-family: var(--font-heading);
@@ -66,10 +68,76 @@
         @media (max-width: 992px) {
             .sidebar { width: 80px; padding: 2rem 0.5rem; }
             .sidebar-brand { font-size: 1rem; }
-            .nav-pill span { display: none; }
+            .nav-pill span:last-child { display: none; }
             .admin-main { margin-left: 80px; padding: 2rem; }
         }
 
+        @media (max-width: 600px) {
+            .sidebar {
+                position: fixed;
+                bottom: 0;
+                top: auto;
+                left: 0;
+                width: 100% !important;
+                height: 70px;
+                flex-direction: row !important;
+                display: flex !important;
+                justify-content: space-around;
+                align-items: center;
+                padding: 0 1rem !important;
+                border-right: none !important;
+                border-top: 1px solid var(--glass-border);
+                border-radius: 20px 20px 0 0;
+                z-index: 1001;
+                background: var(--bg-card);
+            }
+
+            .sidebar-brand {
+                display: none;
+            }
+
+            .nav-pill {
+                margin-bottom: 0 !important;
+                padding: 0.6rem !important;
+                border-radius: 12px;
+                flex-direction: column;
+                gap: 0.1rem !important;
+                font-size: 0.7rem;
+                align-items: center;
+                justify-content: center;
+                flex: 1;
+            }
+
+            .nav-pill span:first-child {
+                font-size: 1.3rem;
+                display: inline-block !important;
+            }
+
+            .nav-pill span:last-child {
+                display: none !important;
+            }
+
+            .sidebar div[style*="position:absolute"] {
+                position: static !important;
+                width: auto !important;
+                display: flex !important;
+                gap: 0.5rem;
+                margin: 0 !important;
+                flex: 2;
+                justify-content: flex-end;
+            }
+
+            .sidebar div[style*="position:absolute"] a,
+            .sidebar div[style*="position:absolute"] div {
+                flex: none;
+            }
+
+            .admin-main {
+                margin-left: 0 !important;
+                margin-bottom: 80px;
+                padding: 1.5rem 1rem !important;
+            }
+        }
     </style>
 </head>
 <body>
